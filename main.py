@@ -8,7 +8,7 @@ from src.scanner import make_scan_options, get_hosts, do_scan, write_result, exe
 from src.slack_logger import SlackLogHandler
 from src.util import get_config_from_syspath
 
-if app_config.APP_ENV == 'prod':
+if app_config.APP_ENV == 'prod' and app_config.SLACK_WEBHOOK:
     logging.SlackLogHandler = SlackLogHandler
 config_path = get_config_from_syspath(f'logging.{app_config.APP_ENV}.conf')
 os.makedirs(app_config.OUTPUT_PATH, exist_ok=True)
