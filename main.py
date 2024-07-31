@@ -46,7 +46,7 @@ def main(target, options):
             logging.debug(f'Finish work pool - {len(col_res)} work.')
         logging.debug(f'Result - {col_res}')
         if col_res:
-            write_result(col_res)
+            write_result(col_res, path=app_config.OUTPUT_PATH)
 
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ import os.path
 from ipaddress import ip_network
 from time import time
 
-from CustomNmap import CustomNmap
+from src.CustomNmap import CustomNmap
 
 
 def write_result(results, path='.', file_name=None, up_state_only=True):
@@ -22,7 +22,8 @@ def write_result(results, path='.', file_name=None, up_state_only=True):
     if file_name is None:
         file_name = f'result_{int(time())}.json'
     with open(os.path.join(path, file_name), 'w', encoding='utf-8') as f:
-        json.dump(_result, f)
+        json.dump(_result, f, indent=2)
+    logging.info(f"Out-{os.path.join(path, file_name)}")
 
 
 def execution_time_logging(func):
@@ -40,6 +41,9 @@ def do_scan(ip, options=""):
     nmap = CustomNmap()
     logging.debug(f'Do scan - {ip}')
     result = nmap.scan_command(ip, options)
+    # TODO: check error
+    if 'error' in result and result['error']:
+        return {ip: result}
     logging.debug(f'Done scan - {ip}')
     return result
 
